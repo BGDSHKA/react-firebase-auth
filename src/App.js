@@ -1,7 +1,8 @@
-import {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react';
 import fire from './Fire';
 import './App.css';
-
+import Login from './Login';
+import Logout from './Logout';
 
 
 function App() {
@@ -24,10 +25,7 @@ const clearErrors = () => {
 
 const handleLogin = () => {
   clearErrors();
-  fire
-.auth()
-.signInWithEmailAndPassword(email, password)
-.catch(err => {
+  fire.auth().signInWithEmailAndPassword(email, password).catch(err => {
   switch(err.code){
     case "auth/invalid-email":
     case "auth/user-disable":
@@ -41,12 +39,9 @@ const handleLogin = () => {
 })
 };
 
-const handleSignup = () => {
+const handleRegistration = () => {
   clearErrors();
-  fire
-.auth()
-.signInWithEmailAndPassword(email, password)
-.catch(err => {
+  fire.auth().createUserWithEmailAndPassword(email, password).catch(err => {
   switch(err.code){
     case "auth/email-already-in-use":
     case "auth/invalid-email":
@@ -72,17 +67,31 @@ const authListener = () => {
       setUser('');
     }
   })
-}
+};
 
 useEffect(() => {
   authListener();
-}, [])
+}, []);
 
   return (
     <div className="App">
-      <h3>PRIVET</h3>
+      {user ? (
+ <Logout handleLogout={handleLogout}/>
+      ) : (
+        <Login email={email} 
+      setEmail={setEmail}
+      password={password}
+      setPassword={setPassword}
+      handleLogin={handleLogin}
+      handleRegistration={handleRegistration}
+      hasAccount={hasAccount}
+      setHasAccount={setHasAccount}
+      emailError={emailError}
+      passwordError={passwordError}
+      />
+      )}
     </div>
   );
-}
+};
 
 export default App;
