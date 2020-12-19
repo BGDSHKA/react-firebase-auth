@@ -1,3 +1,5 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Simple Authentication form**
 
-**Simple React-Firebase Authentication form**
+**Stack** <br>
+React <br>
+Firebase
